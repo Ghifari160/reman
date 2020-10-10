@@ -21,6 +21,7 @@ tech stack-specific builder -> packager
 
 ## Included Tools
 
+- Crashpad Container Generator
 - Crashpad Builder
 - Packager
 
@@ -39,14 +40,24 @@ Run the installation script
 ./install.sh
 ```
 
-Add the reman installation directory to the user `PATH`. In Linux, you normally append this line to
-`~/.bashrc` or `~/.profile`. In macOS, you normally append it to `~/.bash_profile`
+Add the ReMan installation directory to the user `PATH` and set `REMAN_DIR` to the ReMan root
+directory. In Linux, you normally append this line to `~/.bashrc` or `~/.profile`. In macOS, you
+normally append it to `~/.bash_profile`
 
 ``` bash
 export PATH=/path/to/reman/binary:$PATH
+export REMAN_DIR=/path/to/reman/root
 ```
 
 ## Usage
+
+### Crashpad Container Generator
+
+Run the tool
+
+``` shell
+gencontainer-crashpad
+```
 
 ### Crashpad Builder
 

@@ -19,6 +19,11 @@ if [ $machine == "Linux" ] || [ $machine == "Mac" ]; then
         rm $PWD/bin/build-crashpad
     fi
     ln -s $PWD/src/crashpad/crashpad.sh $PWD/bin/build-crashpad
+
+    if [ -f $PWD/bin/gencontainer-crashpad ]; then
+        rm $PWD/bin/gencontainer-crashpad
+    fi
+    ln -s $PWD/src/crashpad/generate-container.sh $PWD/bin/gencontainer-crashpad
     
     if [ -f $PWD/bin/package ]; then
         rm $PWD/bin/package
@@ -27,4 +32,5 @@ if [ $machine == "Linux" ] || [ $machine == "Mac" ]; then
 
     echo "Don't forget to add the installation directory to your PATH!"
     echo "Directory: $PWD/bin"
+    echo "Set REMAN_DIR=$PWD"
 fi
