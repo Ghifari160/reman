@@ -38,7 +38,7 @@ the distribution platorm to the project name.
 
 ``` shell
 export PACKAGER=packager
-export PACKAGER_TARGET=out/Release
+export PACKAGER_TARGET=$PWD/out/Release
 export PACKAGER_PROJECT=crashpad-macos
 export PACKAGER_PROJECT_VERSION=0.8.0
 ```
@@ -46,7 +46,7 @@ export PACKAGER_PROJECT_VERSION=0.8.0
 Run the tool
 
 ``` shell
-crashpad
+build-crashpad
 ```
 
 #### Variables
@@ -69,5 +69,5 @@ cd build
 Run the build tool
 
 ``` shell
-packager /target/directory projectname project version
+package /target/directory projectname project version
 ```

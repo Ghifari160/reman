@@ -15,15 +15,15 @@ if [ $machine == "Linux" ] || [ $machine == "Mac" ]; then
         mkdir -p bin
     fi
 
-    if [ -f $PWD/bin/crashpad ]; then
-        rm $PWD/bin/crashpad
+    if [ -f $PWD/bin/build-crashpad ]; then
+        rm $PWD/bin/build-crashpad
     fi
-    ln -s $PWD/src/crashpad/crashpad.sh $PWD/bin/crashpad
+    ln -s $PWD/src/crashpad/crashpad.sh $PWD/bin/build-crashpad
     
-    if [ -f $PWD/bin/packager ]; then
-        rm $PWD/bin/packager
+    if [ -f $PWD/bin/package ]; then
+        rm $PWD/bin/package
     fi
-    ln -s $PWD/src/packager/packager.sh $PWD/bin/packager
+    ln -s $PWD/src/packager/packager.sh $PWD/bin/package
 
     echo "Don't forget to add the installation directory to your PATH!"
     echo "Directory: $PWD/bin"
