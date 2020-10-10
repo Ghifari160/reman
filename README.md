@@ -1,6 +1,23 @@
 # ReMan
 
-Project release packager.
+ReMan is a project release manager. The idea is that release distribution archives will be packaged
+identically for all projects. The packager (`package`) handles this process. Different tech stacks
+(NodeJS + Express, React web apps, C++ projects, Java projects, etc.) have their own compilation
+and build procedures. Tech stack-specific builders (not yet implemented) handle this process. Some
+projects have their own specific compilation and build procedures. Project-specific builders
+(i.e. `build-crashpad`) handle this process. The build pipeline is as follows:
+
+Project-specific
+
+``` text
+project-specific builder -> packager
+```
+
+Tech Stack-specific
+
+``` text
+tech stack-specific builder -> packager
+```
 
 ## Included Tools
 
