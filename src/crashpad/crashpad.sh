@@ -24,17 +24,8 @@ cp out/Default/crashpad_http_upload out/Packaging/bin/crashpad_http_upload
 
 echo "Copying header files"
 
-if [ ! command -v rsync &> /dev/null ]; then
-    if [ $machine == "Linux" ]; then
-        echo "Rsync not found on Linux. Copying with cp"
-        find . -name \*.h -exec cp --parent {} out/Packaging/include \;
-    elif [ $machine == "Mac" ]; then
-        echo "Rsync not found on macOS. Unable to copy header files"
-        exit 1
-    fi
-else
-    find . -type f \( -iname "*.h" ! -path "./out/*" \) -exec rsync -R {} out/Packaging/include \;
-fi
+# TODO rsync detection
+find . -type f \( -iname "*.h" ! -path "./out/*" \) -exec rsync -R {} out/Packaging/include \;
 
 echo "Copying libraries"
 
