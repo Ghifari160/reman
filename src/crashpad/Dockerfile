@@ -62,3 +62,4 @@ RUN set -x && \
     ./install.sh
 
 ENV PATH="/root/reman/bin:${PATH}"
+ENV REMAN_DIR="/root/reman"
