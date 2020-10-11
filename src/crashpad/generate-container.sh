@@ -10,10 +10,16 @@ case "${unameOut}" in
 esac
 
 if [ -f Dockerfile ]; then
-    rm Dockerfile
+    mv Dockerfile Dockerfile.remanbak
 fi
 cp $REMAN_DIR/src/crashpad/Dockerfile Dockerfile
 
 docker build --tag build .
+
+rm Dockerfile
+
+if [ -f Dockerfile.remanbak ]; then
+    mv Dockerfile.remanbak Dockerfile
+fi
 
 echo "Successfully built a local dev container (tagged as build)."
