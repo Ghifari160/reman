@@ -27,6 +27,23 @@ tech stack-specific builder -> packager
 
 ## Installation
 
+### Dependencies
+
+Ensure the following tools are installed in the system:
+
+- rsync
+- zip
+- tar
+- gzip
+- bz2
+
+When installing ReMan on Windows, the following additional tools are required:
+
+- PowerShell 7
+- `Microsoft.PowerShell.Archive` v1.2.3.0 or higher
+
+### Linux and macOS
+
 Clone from the Git repository and enter the directory
 
 ``` shell
@@ -49,6 +66,29 @@ export PATH=/path/to/reman/binary:$PATH
 export REMAN_DIR=/path/to/reman/root
 ```
 
+### Windows
+
+Clone from the Git repository and enter the directory
+
+``` shell
+git clone https://github.com/ghifari160/reman
+cd reman
+```
+
+Run the installation script
+
+``` shell
+install
+```
+
+**Note:** the installation script must be run either under an elevated shell (Run as Administrator)
+or with
+[Developer Mode](https://docs.microsoft.com/en-us/windows/uwp/get-started/enable-your-device-for-development)
+enabled.
+
+Add the ReMan installation directory to the user `PATH` and set `REMAN_DIR` to the ReMan root
+directory.
+
 ## Usage
 
 ### Crashpad Container Generator
@@ -58,6 +98,10 @@ Run the tool
 ``` shell
 gencontainer-crashpad
 ```
+
+#### Caveats
+
+1) The Crashpad container generator tool is not available on Windows at this moment.
 
 ### Crashpad Builder
 
@@ -86,6 +130,10 @@ build-crashpad
 | `PACKAGER_PROJECT`         | Project name. You may append the distribition platform to the project name (i.e. `crashpad-macos`) |
 | `PACKAGER_PROJECT_VERSION` | Project version                                                                                    |
 
+#### Caveats
+
+1) The Crashpad builder tool is not available on Windows at this moment.
+
 ### Packager
 
 Enter the prepared directory
@@ -99,3 +147,7 @@ Run the build tool
 ``` shell
 package /target/directory projectname project version
 ```
+
+#### Caveats
+
+1) On Windows, the packaging tool cannot generate BZ2 tarballs at this moment.
