@@ -42,6 +42,8 @@ When installing ReMan on Windows, the following additional tools are required:
 - PowerShell 7
 - `Microsoft.PowerShell.Archive` v1.2.3.0 or higher
 
+The installation tool on Windows will _attempt_ to install PowerShell 7 and `Microsoft.PowerShell.Archive`.
+
 ### Linux and macOS
 
 Clone from the Git repository and enter the directory
