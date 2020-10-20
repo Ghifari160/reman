@@ -1,0 +1,4 @@
+!.remanignore
+*.git*
+*.DS_Store*
+*.vscode*
