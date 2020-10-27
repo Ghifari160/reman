@@ -1,10 +1,9 @@
 #include <iomanip>
+#include <iostream>
 #include <string>
 #include <vector>
 
 #include <sys/stat.h>
-
-#include "thirdparty/zipper/include/zipper/zipper.h"
 
 #include "../package.h"
 #include "packager.h"
@@ -13,9 +12,6 @@
 #include "packageutil.h"
 
 void processRemanIgnore(const std::vector<std::string> &ignored, std::vector<std::string> &dirs, bool debug_mode);
-
-void packageArchive_zip(const std::vector<std::string> &dirs, const std::string &package_archiveName);
-void packageArchive_zip(const std::vector<std::string> &dirs, const std::string &package_archiveName, bool verbose);
 
 int main(int argc, char** argv)
 {
@@ -153,11 +149,16 @@ int main(int argc, char** argv)
     processRemanIgnore(ignored, items, arg_debug);
 
     if(arg_verbose)
-        std::cout << "Cleaning up directory scan list" << std::endl;
+        std::cout << "Cleaning up directory scan list" << std::endl << std::endl;
     std::vector<std::string> dirs, files, all;
     clean_directoryList(items, dirs, files, all);
 
-    packageArchive_zip(files, package_archiveName_zip, arg_verbose);
+    if(arg_verbose)
+        std::cout << "Packaging zip archive" << std::endl;
+    packageutil_write_zip(files, package_archiveName_zip, arg_debug);
+
+    if(arg_verbose)
+        std::cout << "Packaging tar (gzip) archive" << std::endl;
     packageutil_write_tar_gzip(files, package_archiveName_tgz, arg_debug);
 }
 
@@ -188,27 +189,4 @@ void processRemanIgnore(const std::vector<std::string> &ignored, std::vector<std
             }
         }
     }
-}
-
-void packageArchive_zip(const std::vector<std::string> &dirs, const std::string &package_archiveName)
-{
-    packageArchive_zip(dirs, package_archiveName, false);
-}
-
-void packageArchive_zip(const std::vector<std::string> &dirs, const std::string &package_archiveName, bool verbose)
-{
-    zipper::Zipper package_archive(package_archiveName);
-
-    if(verbose)
-        std::cout << "PACKAGING DIRECTORY LISTS:" << std::endl;
-
-    for(int i = 0; i < dirs.size(); i++)
-    {
-        if(verbose)
-            std::cout << "  " << dirs.at(i) << std::endl;
-
-        package_archive.add(dirs.at(i), zipper::Zipper::SaveHierarchy);
-    }
-
-    package_archive.close();
 }

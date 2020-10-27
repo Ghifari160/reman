@@ -16,7 +16,7 @@ $(OBJ_DIR)/%.o: %.cpp
 build: $(OBJECTS)
 	mkdir -p $(@D)
 	# TODO: Find a way to make libraries portable
-	$(CXX) -o $(BUILD_DIR)/packager $(OBJECTS) thirdparty/zipper/bin/libZipper.a thirdparty/libarchive/bin/libarchive.a -lz -liconv -lxml2 -llzma -lbz2
+	$(CXX) -o $(BUILD_DIR)/packager $(OBJECTS) thirdparty/libarchive/bin/libarchive.a -lz -liconv -lxml2 -llzma -lbz2
 
 clean:
 	rm -rf $(OBJ_DIR) $(BUILD_DIR)

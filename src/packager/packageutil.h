@@ -19,6 +19,23 @@ void packageutil_write_entry(struct archive *archive, const std::string filename
 void packageutil_write_entry(struct archive *archive, const std::string filename, bool arg_debug);
 
 /**
+ * @brief Write archive zip
+ * 
+ * @param files Indicator prefixless directory scan list
+ * @param name Path to archive
+ */
+void packageutil_write_zip(const std::vector<std::string> &files, const std::string name);
+
+/**
+ * @brief Write archive zip
+ * 
+ * @param files Indicator prefixless directory scan list
+ * @param name Path to archive
+ * @param arg_debug Debug flag. If `true`, the data buffer breakpoints for I/O will be logged in stdout
+ */
+void packageutil_write_zip(const std::vector<std::string> &files, const std::string name, bool arg_debug);
+
+/**
  * @brief Write archive tarball (gzip)
  * 
  * @param files Indicator prefixless directory scan list
