@@ -1,7 +1,8 @@
-#include <iostream>
 #include <iomanip>
 #include <string>
 #include <vector>
+
+#include <sys/stat.h>
 
 #include "thirdparty/zipper/include/zipper/zipper.h"
 
@@ -9,6 +10,7 @@
 #include "packager.h"
 #include "remanignore.h"
 #include "directory.h"
+#include "packageutil.h"
 
 void processRemanIgnore(const std::vector<std::string> &ignored, std::vector<std::string> &dirs, bool debug_mode);
 
@@ -97,9 +99,12 @@ int main(int argc, char** argv)
 
     package_basename = project_name + "-v" + project_version;
 
-    std::string package_archiveName_zip(package_basename + ".zip"),
-                package_archiveName_tgz(package_basename + ".tar.gz"),
-                package_archiveName_tbz(package_basename + ".tar.bz2");
+    if(packager_target.substr(packager_target.size() - 1, 1) != DIRECTORY_SEPERATOR)
+        packager_target.append(DIRECTORY_SEPERATOR);
+
+    std::string package_archiveName_zip(packager_target + package_basename + ".zip"),
+                package_archiveName_tgz(packager_target + package_basename + ".tar.gz"),
+                package_archiveName_tbz(packager_target + package_basename + ".tar.bz2");
     
     if(arg_verbose)
     {
@@ -131,13 +136,13 @@ int main(int argc, char** argv)
     // 
     // Or:
     // 
-    // - [ ] TGZ remaining items
+    // - [x] TGZ remaining items
     // - [ ] TBZ remaining items
     // 
 
     if(arg_verbose)
         std::cout << "Scanning directory contents" << std::endl;
-    std::vector<std::string> dirs = scan_directory(".", true);
+    std::vector<std::string> items = scan_directory(".", true);
 
     if(arg_verbose)
         std::cout << "Reading .remanignore" << std::endl;
@@ -145,10 +150,15 @@ int main(int argc, char** argv)
 
     if(arg_verbose)
         std::cout << "Processing .remanignore" << std::endl;
+    processRemanIgnore(ignored, items, arg_debug);
 
-    processRemanIgnore(ignored, dirs, arg_debug);
+    if(arg_verbose)
+        std::cout << "Cleaning up directory scan list" << std::endl;
+    std::vector<std::string> dirs, files, all;
+    clean_directoryList(items, dirs, files, all);
 
-    packageArchive_zip(dirs, package_archiveName_zip, arg_verbose);
+    packageArchive_zip(files, package_archiveName_zip, arg_verbose);
+    packageutil_write_tar_gzip(files, package_archiveName_tgz, arg_debug);
 }
 
 void processRemanIgnore(const std::vector<std::string> &ignored, std::vector<std::string> &dirs, bool debug_mode)
@@ -159,7 +169,8 @@ void processRemanIgnore(const std::vector<std::string> &ignored, std::vector<std
 
         for(int j = 0; j < dirs.size();)
         {
-            std::vector<char> dir(dirs.at(j).c_str(), dirs.at(j).c_str() + dirs.at(j).size() + 1);
+            std::string sdir(dirs.at(j).substr(1));
+            std::vector<char> dir(sdir.c_str(), sdir.c_str() + sdir.size() + 1);
 
             if(strmatch(dir.data(), pattern.data(), dir.size(), pattern.size()))
             {

@@ -3,6 +3,8 @@
 #include <iostream>
 #include <dirent.h>
 
+#include <sys/stat.h>
+
 #include "directory.h"
 
 void scan_directory(std::vector<std::string> &items, const std::string path)
@@ -33,20 +35,86 @@ void scan_directory(std::vector<std::string> &items, const char *path, bool recu
         {
             if(strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
             {
-                std::string lpath;
+                std::string cpath, lpath;
 
-                lpath.append(path);
-                lpath.append(DIRECTORY_SEPERATOR);
-                lpath.append(entry->d_name);
+                cpath.append(path);
+                cpath.append(DIRECTORY_SEPERATOR);
+                cpath.append(entry->d_name);
+
+                if(entry->d_type == DT_DIR)
+                    lpath.append("D");
+                else
+                    lpath.append("F");
+                
+                lpath.append(cpath);
+
+                items.push_back(lpath);
 
                 if(entry->d_type == DT_DIR && recursive)
-                    scan_directory(items, lpath, recursive);
-                else
-                    items.push_back(lpath);
+                    scan_directory(items, cpath, recursive);
+                // else
+                //     items.push_back(lpath);
             }
         }
     }
-} 
+}
+
+void clean_directoryList(std::vector<std::string> &items, std::vector<std::string> &all)
+{
+    std::vector<std::string> dummyVector;
+
+    clean_directoryList(items, dummyVector, dummyVector, all);
+}
+
+void clean_directoryList(std::vector<std::string> &items, std::vector<std::string> &directory, std::vector<std::string> &files, std::vector<std::string> &all)
+{
+    for(int i = 0; i < items.size(); i++)
+    {
+        if(items.at(i).substr(0, 1) == "D")
+            directory.push_back(items.at(i).substr(1));
+        else if(items.at(i).substr(0, 1) == "F")
+            files.push_back(items.at(i).substr(1));
+
+        all.push_back(items.at(i).substr(1));
+    }
+}
+
+void get_perms(mode_t &perms, mode_t &mode)
+{
+    perms = (mode & DIRECTORY_MASK_PERMS);
+}
+
+void get_directory_mode(mode_t &mode, const std::string path)
+{
+    struct stat st;
+    stat(path.c_str(), &st);
+    mode = st.st_mode;
+}
+
+
+void get_directory_type(mode_t &type, const std::string path)
+{
+    mode_t mode;
+    get_directory_mode(mode, path);
+    get_directory_type(type, mode);
+}
+
+void get_directory_type(mode_t &type, const mode_t &mode)
+{
+    type = (mode & DIRECTORY_MASK_TYPE);
+}
+
+void get_directory_perms(mode_t &perms, const std::string path)
+{
+    mode_t mode;
+    get_directory_mode(mode, path);
+    get_directory_perms(perms, mode);
+}
+
+void get_directory_perms(mode_t &perms, const mode_t &mode)
+{
+    perms = (mode & DIRECTORY_MASK_PERMS);
+}
 
 std::vector<std::string> scan_directory(const std::string path)
 {

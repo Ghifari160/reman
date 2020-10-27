@@ -1,0 +1,15 @@
+# libarchive
+# Copyright (c) 2003-2018 <author(s)>
+# See COPYING for license terms
+# 
+# libarchive for this project is distributed by GHIFARI160. The contents of this directory should
+# not be committed into the repository. Run the download script or manually download the dependency
+# from
+# https://cdn.gassets.space/libarchive/{version}/libarchive-{platform}-v{version}.{zip|tar.gz|tar.bz2}
+
+# Ignore all directory contents
+*
+
+# except for these files
+!.gitignore
+!download-libarchive.sh
