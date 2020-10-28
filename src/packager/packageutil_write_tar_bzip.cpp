@@ -14,15 +14,12 @@ void packageutil_write_tar_bzip2(const std::vector<std::string> &files, const st
 {
     struct archive *a;
 
-    a = archive_write_new();
-
-    archive_write_set_format_pax_restricted(a);
+    packageutil_archiveBootstrap_createTar(a);
     archive_write_add_filter_bzip2(a);
     archive_write_open_filename(a, name.c_str());
 
     for(int i = 0; i < files.size(); i++)
         packageutil_write_entry(a, files.at(i));
 
-    archive_write_close(a);
-    archive_write_free(a);
+    packageutil_archiveBootstrap_close(a);
 }
