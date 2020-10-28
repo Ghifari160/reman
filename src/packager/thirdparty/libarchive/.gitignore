@@ -13,3 +13,4 @@
 # except for these files
 !.gitignore
 !download-libarchive.sh
+!build.md
