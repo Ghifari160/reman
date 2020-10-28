@@ -52,4 +52,21 @@ void packageutil_write_tar_gzip(const std::vector<std::string> &files, const std
  */
 void packageutil_write_tar_gzip(const std::vector<std::string> &files, const std::string name, bool arg_debug);
 
+/**
+ * @brief Write archive tarball (bzip2)
+ * 
+ * @param files Indicator prefixless directory scan list
+ * @param name Path to archive
+ */
+void packageutil_write_tar_bzip2(const std::vector<std::string> &files, const std::string name);
+
+/**
+ * @brief Write archive tarball (bzip2)
+ * 
+ * @param files Indicator prefixless directory scan list
+ * @param name Path to archive
+ * @param arg_debug Debug flag. If `true`, the data buffer breakpoints for I/O will be logged in stdout
+ */
+void packageutil_write_tar_bzip2(const std::vector<std::string> &files, const std::string name, bool arg_debug);
+
 #endif /* packageutil_h */

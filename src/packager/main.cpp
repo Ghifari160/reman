@@ -133,7 +133,7 @@ int main(int argc, char** argv)
     // Or:
     // 
     // - [x] TGZ remaining items
-    // - [ ] TBZ remaining items
+    // - [x] TBZ remaining items
     // 
 
     if(arg_verbose)
@@ -160,6 +160,10 @@ int main(int argc, char** argv)
     if(arg_verbose)
         std::cout << "Packaging tar (gzip) archive" << std::endl;
     packageutil_write_tar_gzip(files, package_archiveName_tgz, arg_debug);
+
+    if(arg_verbose)
+        std::cout << "Packaging tar (bzip2) archive" << std::endl;
+    packageutil_write_tar_bzip2(files, package_archiveName_tbz, arg_debug);
 }
 
 void processRemanIgnore(const std::vector<std::string> &ignored, std::vector<std::string> &dirs, bool debug_mode)
