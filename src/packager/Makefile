@@ -9,7 +9,7 @@ OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
 $(OBJ_DIR)/%.o: %.cpp
 	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -o $@ -c $< --include-directory="thirdparty/libarchive/include"
 
 .PHONY: build clean
 

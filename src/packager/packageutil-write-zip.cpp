@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 
-#include "thirdparty/libarchive/include/libarchive/archive.h"
+#include "libarchive/archive.h"
 
 #include "packageutil.h"
 

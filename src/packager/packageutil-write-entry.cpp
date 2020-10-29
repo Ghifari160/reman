@@ -5,8 +5,8 @@
 
 #include <sys/stat.h>
 
-#include "thirdparty/libarchive/include/libarchive/archive.h"
-#include "thirdparty/libarchive/include/libarchive/archive_entry.h"
+#include "libarchive/archive.h"
+#include "libarchive/archive_entry.h"
 
 #include "packageutil.h"
 #include "directory.h"
