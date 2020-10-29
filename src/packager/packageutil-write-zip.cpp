@@ -12,9 +12,8 @@ void packageutil_write_zip(const std::vector<std::string> &files, const std::str
 
 void packageutil_write_zip(const std::vector<std::string> &files, const std::string name, bool arg_debug)
 {
-    struct archive *a;
+    struct archive *a = archive_write_new();
 
-    packageutil_archiveBootstrap_create(a);
     archive_write_set_format_zip(a);
     archive_write_open_filename(a, name.c_str());
 

@@ -19,13 +19,6 @@ void packageutil_write_entry(struct archive *archive, const std::string filename
 void packageutil_write_entry(struct archive *archive, const std::string filename, bool arg_debug);
 
 /**
- * @brief Bootstrap the creation of libarchive archive
- * 
- * @param archive libarchive archive struct
- */
-void packageutil_archiveBootstrap_create(struct archive *archive);
-
-/**
  * @brief Bootstrap the creation of libarchive Tar archive
  * 
  * @param archive libarchive archive struct

@@ -12,7 +12,7 @@ void packageutil_write_tar_gzip(const std::vector<std::string> &files, const std
 
 void packageutil_write_tar_gzip(const std::vector<std::string> &files, const std::string name, bool arg_debug)
 {
-    struct archive *a;
+    struct archive *a = archive_write_new();
 
     packageutil_archiveBootstrap_createTar(a);
     archive_write_add_filter_gzip(a);
